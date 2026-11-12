@@ -1,10 +1,8 @@
 """
-adversarial_training.py — Phase 4: Elsevier-Grade Adversarial Training
-Improvements:
-  - Adversarial Subspace Smoothing (Gaussian Jitter): Prevents memorisation 
-    by adding random noise when oversampling adversarial examples.
-  - Multi-epsilon adversarial training data (ε=1,2,3,5).
-  - Enforced minimum augmentation rate (10%) for true boundary shifting.
+adversarial_training.py
+
+Adversarial retraining routines with Gaussian Subspace Smoothing (GSS)
+for decision tree ensembles and neural baselines.
 """
 
 import os
@@ -145,7 +143,7 @@ def get_mlp_params():
 def run_augmentation_ablation(X_train, X_test, y_train, y_test,
                                X_adv_train, y_adv_train, X_adv_test, col_names, mutable_idx):
     print("\n" + "="*60)
-    print("EXP 1: ABLATION + SUBSPACE SMOOTHING")
+    print("Ablation: Augmentation Rate Selection")
     print("="*60)
 
     rates   = [0.0, 0.05, 0.10, 0.20, 0.30, 0.40]
@@ -173,18 +171,18 @@ def run_augmentation_ablation(X_train, X_test, y_train, y_test,
 
     df['score'] = df['clean_acc'] - df['seen_asr']
     
-    # Enforce minimum 10% rate for true Elsevier generalisation
+    
     valid_df = df[df['aug_rate'] >= 0.10]
     best_rate = float(valid_df.loc[valid_df['score'].idxmax(), 'aug_rate'])
     best_row  = df.loc[df['aug_rate'] == best_rate].iloc[0]
     
-    print(f"\n  ★ Optimal Generalisation Rate: {best_rate*100:.0f}% ")
+    print(f"\n  [INFO] Selected augmentation rate: {best_rate*100:.0f}% ")
     return df, best_rate
 
 
 def train_at_models(X_train, X_test, y_train, y_test, X_adv_train, y_adv_train, best_rate, col_names, mutable_idx):
     print("\n" + "="*60)
-    print(f"TRAINING AT MODELS — Rate={best_rate*100:.0f}%")
+    print(f"TRAINING AT MODELS: Rate={best_rate*100:.0f}%")
     print("Applying Gaussian Subspace Smoothing to prevent memorisation...")
     print("="*60)
 
@@ -195,7 +193,7 @@ def train_at_models(X_train, X_test, y_train, y_test, X_adv_train, y_adv_train, 
     xgb_at.fit(X_aug, y_aug)
     xgb_at.n_jobs = 1
     joblib.dump(xgb_at, os.path.join(MODELS_DIR, "XGBoost_AT.joblib"))
-    print(f"  ✅ Saved: XGBoost_AT.joblib")
+    print(f"  [INFO] Saved: XGBoost_AT.joblib")
 
     print(f"\n  [AT-MLP] Training on {len(X_aug):,} samples (may take 5-10 mins)...")
     mlp_at = MLPClassifier(**get_mlp_params())
@@ -204,14 +202,14 @@ def train_at_models(X_train, X_test, y_train, y_test, X_adv_train, y_adv_train, 
     fpr, tpr, threshs = roc_curve(y_test, mlp_at.predict_proba(X_test)[:, 1])
     opt_thr = threshs[np.argmax(tpr - fpr)]
     joblib.dump({'model': mlp_at, 'threshold': opt_thr}, os.path.join(MODELS_DIR, "MLP_AT.joblib"))
-    print(f"  ✅ Saved: MLP_AT.joblib (threshold={opt_thr:.4f})")
+    print(f"  [INFO] Saved: MLP_AT.joblib (threshold={opt_thr:.4f})")
 
     return xgb_at, mlp_at
 
 
 if __name__ == '__main__':
     print("=" * 60)
-    print("PHASE 4: ADVERSARIAL TRAINING — ELSEVIER GRADE")
+    print("[INFO] Adversarial Training with GSS...")
     print("=" * 60)
 
     np.random.seed(RANDOM_SEED)
@@ -225,8 +223,7 @@ if __name__ == '__main__':
     adv_path  = os.path.join(DATA_PROCESSED_DIR, "X_adversarial_sample.parquet")
     X_adv_p2  = pd.read_parquet(adv_path).reindex(columns=col_names, fill_value=0)
     
-    # We generated multi-scale in previous run. Let's just use Phase 2 directly, 
-    # but with our NEW Subspace Smoothing, which is much faster and stronger!
+
     X_adv_all = X_adv_p2
     y_adv_all = pd.Series(np.ones(len(X_adv_all), dtype=int))
     
@@ -238,6 +235,6 @@ if __name__ == '__main__':
     train_at_models(X_train, X_test, y_train, y_test, X_adv_all, y_adv_all, best_rate, col_names, mutable_idx)
 
     print("\n" + "="*60)
-    print("✅ Phase 4 Training Complete.")
-    print(f"   Next: python src/phase4_defense_evaluation.py")
+    print("[INFO] Adversarial training completed.")
+    print(f"   Next: python src/eval_defense.py")
     print("="*60)

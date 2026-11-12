@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-generate_final_figures.py -- Master Final Figure Generator
-Produces all 21 publication figures with clean titles.
+generate_final_figures.py -- Generates all evaluation and comparison figures for the manuscript
+Produces evaluation figures across all experimental stages.
 """
 
 import os
 import sys
 import io
 
-# Force UTF-8 stdout so emojis/special chars don't crash on Windows cp1252
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
 import joblib
@@ -658,9 +657,7 @@ def fig21_drift():
 
 # ════════════════════════════════════════════════════════════
 if __name__ == '__main__':
-    print("="*60)
-    print("GENERATING ALL 21 FINAL PUBLICATION FIGURES")
-    print("="*60)
+    print("[INFO] Rendering manuscript evaluation figures...")
     cleanup_old_figures()
     print("\n--- Generating figures ---")
     fig01_baseline()
@@ -684,7 +681,4 @@ if __name__ == '__main__':
     fig19_tsne()
     fig20_pareto()
     fig21_drift()
-    print("\n" + "="*60)
-    print("ALL 21 FIGURES GENERATED IN:")
-    print(f"  {FIGURES_DIR}")
-    print("="*60)
+    print(f"[INFO] Figure generation complete. Output directory: {FIGURES_DIR}")

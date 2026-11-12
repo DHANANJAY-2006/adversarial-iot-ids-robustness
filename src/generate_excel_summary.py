@@ -49,7 +49,7 @@ df = pd.DataFrame({
 })
 df.to_excel(writer, sheet_name='Phase1_Baseline', index=False)
 
-# ── Sheet 2: Phase 2 Attack Results ──────────────────────
+# ── Sheet 2: Evasion Attack Evaluation ──────────────────────
 df = pd.DataFrame({
     'Model':              ['Random Forest', 'XGBoost', 'LightGBM'],
     'Clean Recall (%)':   [99.4, 99.4, 99.2],
@@ -82,7 +82,7 @@ df = pd.DataFrame({
 })
 df.to_excel(writer, sheet_name='Phase2_GA_vs_Random', index=False)
 
-# ── Sheet 5: Per-Class ASR (Phase 2) ─────────────────────
+# ── Sheet 5: Per-Class Vulnerability ─────────────────────
 df = pd.DataFrame({
     'Attack Class': ['DDOS-RSTFINFLOOD','DDOS-TCP_FLOOD','DDOS-SYN_FLOOD','DDOS-PSHACK_FLOOD',
                      'DOS-UDP_FLOOD','DDOS-UDP_FLOOD','MIRAI-UDPPLAIN','DDOS-SYNONYMOUSIP_FLOOD',
@@ -99,7 +99,7 @@ df = pd.DataFrame({
 })
 df.to_excel(writer, sheet_name='Phase2_PerClass_ASR', index=False)
 
-# ── Sheet 6: Cross-Architecture (Phase 3) ─────────────────
+# ── Sheet 6: Tree vs Neural Comparison ─────────────────
 df = pd.DataFrame({
     'Model':               ['XGBoost', 'MLP'],
     'Architecture':        ['Gradient Boosted Trees', 'Neural Network (512-256-128-64)'],
@@ -108,13 +108,13 @@ df = pd.DataFrame({
     'AUC':                 [0.9981, 0.9969],
     'Decision Threshold':  [0.5000, 0.9722],
     'Threshold Method':    ['Default', "Youden's J"],
-    'ASR (%)':             [57.0, 100.0],
+    'ASR (%)':             [56.0, 100.0],
     'Clean Recall (%)':    [99.4, 98.0],
     'Adv Recall (%)':      [44.0, 0.0],
 })
 df.to_excel(writer, sheet_name='Phase3_CrossArch', index=False)
 
-# ── Sheet 7: Transfer Matrix (Phase 3 + 4) ───────────────
+# ── Sheet 7: Transferability Matrix ───────────────
 df = pd.DataFrame({
     'Surrogate (Attacker)': ['XGBoost (Clean)', 'MLP (Clean)'],
     'XGBoost Clean (%)':    [45.0, 0.0],
@@ -124,7 +124,7 @@ df = pd.DataFrame({
 })
 df.to_excel(writer, sheet_name='Phase4_TransferMatrix', index=False)
 
-# ── Sheet 8: Defense Summary (Phase 4) ───────────────────
+# ── Sheet 8: Defense Evaluation Summary ───────────────────
 df = pd.DataFrame({
     'Model':               ['XGBoost (baseline)', 'XGBoost (AT)', 'MLP (baseline)', 'MLP (AT)'],
     'Defense Applied':     ['None', 'Gaussian Subspace Smoothing AT', 'None', 'Gaussian Subspace Smoothing AT'],
