@@ -1,68 +1,50 @@
-%% Elsevier elsarticle Template
-%% Journal: Journal of King Saud University -- Computer and Information Sciences (JKSUCIS)
+%% Springer Nature sn-jnl Template
+%% Journal: The Journal of Supercomputing
 %% Manuscript: Adversarial Robustness of Tree-Based Intrusion Detection Systems
 %%             Under Feature-Constrained Evasion Attacks
-%% Format: Official Elsevier Single-Column Preprint Submission Layout
+%% Format: Official Springer Nature 2-Column Layout (iicol)
 
-\documentclass[preprint,12pt]{elsarticle}
-\usepackage{lineno}
+\documentclass[iicol,pdflatex,sn-mathphys-num]{sn-jnl}
 
-\usepackage[pdfencoding=auto,psdextra,colorlinks=true,linkcolor=blue!75!black,citecolor=blue!75!black,urlcolor=blue!75!black]{hyperref}
-\usepackage{amsmath,amssymb}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{xcolor}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{tabularx}
-\usepackage{makecell}
-\usepackage{microtype}
-\usepackage{xurl}
-\def\urlprefix{URL:\ }
+\usepackage{graphicx}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\usepackage{amsthm}%
+\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{array}%
+\usepackage{tabularx}%
+\usepackage{makecell}%
+\usepackage{microtype}%
+\usepackage{xurl}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+
+\hypersetup{colorlinks=true,linkcolor=blue!75!black,citecolor=blue!75!black,urlcolor=blue!75!black}
+\graphicspath{{figures/}}
 \raggedbottom
-
-\journal{Journal of King Saud University -- Computer and Information Sciences}
-
-\bibliographystyle{elsarticle-num}
-
-% Float placement tuning for clean single-column layout
-\renewcommand{\topfraction}{0.90}
-\renewcommand{\bottomfraction}{0.85}
-\renewcommand{\textfraction}{0.08}
-\renewcommand{\floatpagefraction}{0.75}
 
 \begin{document}
 
-\begin{frontmatter}
+\title[Adversarial Robustness of Tree-Based Intrusion Detection Systems]{Adversarial Robustness of Tree-Based Intrusion Detection Systems Under Feature-Constrained Evasion Attacks}
 
-\title{Adversarial Robustness of Tree-Based Intrusion Detection Systems Under Feature-Constrained Evasion Attacks}
+\author*[1]{\fnm{Dhananjay} \sur{Kadge}}\email{kadge.dhananjay.in@gmail.com}
 
-\author[a]{Dhananjay Kadge\corref{cor1}}
-\ead{kadge.dhananjay.in@gmail.com}
-\cortext[cor1]{Corresponding author}
+\author[1]{\fnm{Monali} \sur{Maid}}\email{mmaid@mgmu.ac.in}
 
-\author[a]{Monali Maid}
-\ead{mmaid@mgmu.ac.in}
+\affil*[1]{\orgdiv{Department of Computer Science and Engineering, School of Engineering and Technology}, \orgname{MGM University}, \orgaddress{\city{Chhatrapati Sambhajinagar}, \postcode{431001}, \state{Maharashtra}, \country{India}}}
 
-\address[a]{Department of Computer Science and Engineering, School of Engineering and Technology, MGM University, Chhatrapati Sambhajinagar 431001, Maharashtra, India}
+\abstract{Flow-based intrusion detection systems in Internet of Things (IoT) networks rely heavily on tree ensembles that exceed 99\% accuracy on clean benchmarks. However, unconstrained adversarial evaluations produce malformed packets that middleboxes drop before detection. We evaluate Random Forest, XGBoost, LightGBM, and a deep multilayer perceptron across 701,962 flows and 31 attack classes from the 105-device CIC-IoT2023 testbed under a multi-objective genetic algorithm restricted strictly to continuous, transport-valid flow statistics. XGBoost exhibits a sharp phase transition at perturbation budget $\varepsilon = 4.69$, jumping from 2.40\% to 63.20\% attack success rate. Random Forest blocks 98\% of surrogate transfers from XGBoost yet fails under direct query (99.00\% evasion), while the neural network collapses completely (100.00\% evasion). Functional audits show that 85\% of evasive volumetric floods lose denial-of-service capability, whereas web injections retain 94\% viability. Finally, Gaussian Subspace Smoothing reduces XGBoost evasion from 41.67\% to 1.33\% while preserving 99.33\% clean recall.}
 
-\begin{abstract}
-In IoT networks, flow-based intrusion detection is overwhelmingly built on gradient-boosted trees. On benchmarks such as CIC-IoT2023, these models post detection rates above 99\% almost without exception. This investigation evaluates classifier resilience when adversarial modifications are strictly restricted to continuous flow features that preserve underlying transport-layer semantics and physical packet deliverability. Across 701,962 clean flow records from 105 physical devices, we evaluate Random Forest, XGBoost, LightGBM, and a deep MLP against a multi-objective genetic algorithm restricted strictly to mutable flow statistics. Under these constraints, XGBoost holds flat at 2.40\% evasion out to a perturbation budget of four standard deviations and then escalates abruptly: evasion jumps from 2.40\% to 63.20\% between $\varepsilon = 4.03$ and $\varepsilon = 4.69$ as perturbations cross root splits on packet counts. Random Forest presents an asymmetric vulnerability profile: it stops 98\% of surrogate transfers from XGBoost yet admits 99.00\% evasion under direct white-box query access. Deep neural networks collapse completely (100.00\% attack success rate, zero retained recall) under identical constraints. Operational validity audits further show that over 85\% of volumetric flood evasions are self-defeating degenerate flows that throttle packet rates down to benign levels, whereas low-rate web injections retain 94\% functional exploit validity. To harden tree models without leaf-level overfitting, we introduce Gaussian Subspace Smoothing (GSS), which injects Gaussian noise exclusively across the mutable subspace during training. Retrained with GSS, XGBoost reduces adversarial evasion from 41.67\% to 1.33\% (macro-average across all 31 classes declines from 62.13\% to 30.39\%) while holding clean detection recall at 99.33\%. The project repository (\url{https://github.com/DHANANJAY-2006/adversarial-iot-ids-robustness}) contains the complete pipeline, trained model weights, experimental seeds, and figure generation scripts.
-\end{abstract}
+\keywords{Adversarial evasion, Gradient-boosted decision trees, IoT intrusion detection, CICIoT2023, Gaussian subspace smoothing, Protocol-constrained attacks}
 
-\begin{keyword}
-Adversarial evasion \sep Gradient-boosted decision trees \sep IoT intrusion detection \sep CICIoT2023 \sep Gaussian subspace smoothing \sep Protocol-constrained attacks
-\end{keyword}
+\maketitle
 
-\end{frontmatter}
-
-\linenumbers
-
-% ─────────────────────────────────────────────────────────────
 \section{Introduction}
 \label{sec:intro}
 % ─────────────────────────────────────────────────────────────
@@ -129,12 +111,13 @@ On the defensive side, standard adversarial retraining often fails on decision t
 \label{sec:rel_taxonomy}
 To systematically establish the contribution of this work relative to the literature, Table~\ref{tab:related_work} compares representative studies across six key technical dimensions.
 
-\begin{table}[htbp]
+\begin{table*}[t]
 \centering
+\footnotesize
+\renewcommand{\arraystretch}{0.95}
 \caption{Taxonomic comparison of representative literature on adversarial machine learning in network intrusion detection. In contrast to summary abstracts, evaluations highlight concrete operational constraints and reproducibility gaps.}
 \label{tab:related_work}
-\resizebox{0.98\textwidth}{!}{%
-\begin{tabular}{>{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}p{2.0cm} >{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}p{6.0cm}}
+\begin{tabularx}{\textwidth}{l p{1.8cm} p{2.2cm} p{2.2cm} p{2.1cm} X}
 \toprule
 \textbf{Study} & \textbf{Dataset} & \textbf{Attack Model} & \textbf{Target Models} & \textbf{Defense} & \textbf{Critical Assessment / Operational Gap} \\
 \midrule
@@ -149,9 +132,8 @@ Al-Haija \& Al-Dmour~\cite{alhaija2024adversarial} & CIC-IoT2023 & FGSM / PGD & 
 \midrule
 \textbf{This Work} & \textbf{CIC-IoT2023} & \textbf{Feature-Constrained Multi-Objective GA} & \textbf{XGBoost, RF, LightGBM, Deep MLP} & \textbf{AT with Gaussian Subspace Smoothing} & \textbf{Audits physical attack validity; identifies the RF security paradox and threshold phase transition ($\varepsilon \approx 4.69$); eliminates ASR to 1.33\% with 0.00 pp clean recall penalty.} \\
 \bottomrule
-\end{tabular}%
-}
-\end{table}
+\end{tabularx}
+\end{table*}
 
 % ─────────────────────────────────────────────────────────────
 \section{Methodology and Threat Model}
@@ -160,12 +142,12 @@ Al-Haija \& Al-Dmour~\cite{alhaija2024adversarial} & CIC-IoT2023 & FGSM / PGD & 
 
 Evaluating evasion under realistic protocol constraints requires tying feature edits to physical network mechanics. Below, we formalize our dataset pipeline, threat model, evolutionary search algorithm, and the Gaussian Subspace Smoothing defense. Figure~\ref{fig:overview} presents the architectural overview of the full research pipeline.
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig07_master_overview.png}
+  \includegraphics[width=\textwidth]{figures/fig07_master_overview.png}
   \caption{Architectural overview of the research framework. The pipeline spans four core phases: (1) Baseline characterization and SHAP feature importance attribution on CIC-IoT2023; (2) Feature-constrained multi-objective Genetic Algorithm evasion across variable perturbation budgets ($\varepsilon$); (3) Cross-architecture comparative evaluation against deep neural networks; and (4) Adversarial training augmented with Gaussian Subspace Smoothing (GSS) to achieve robust, utility-preserving defense.}
   \label{fig:overview}
-\end{figure}
+\end{figure*}
 
 \subsection{Benchmark Dataset and Preprocessing}
 \label{sec:dataset}
@@ -175,16 +157,16 @@ The testbed capture encompasses 33 distinct attack scenario executions that aggr
 \begin{enumerate}
     \item \textit{Filtering invalid records.} Out of 701,978 raw captured flow records, exactly 16 records containing infinite or missing values (induced by zero-division in single-packet variance metrics) were discarded, yielding a clean corpus of 701,962 flow records.
     \item \textit{Binary and multi-class labels.} We mapped traffic to binary detection targets ($y=0$ for Benign, $y=1$ for Malicious) matching frontline SOC triage workflows, while preserving original multi-class labels to support per-attack vulnerability breakdowns across all 31 attack families.
-    \item \textit{Feature dimensionality.} After eliminating zero-variance columns and protocol metadata, the active feature space comprises $d=39$ continuous dimensions.
+    \item \textit{Feature dimensionality.} After eliminating constant zero-variance columns and protocol metadata, the active feature space comprises $d=39$ continuous dimensions.
     \item \textit{Stratified train/test holdout.} The corpus of 701,962 clean flows was held out at an 80/20 ratio ($N_{\text{train}} = 561,569$ and $N_{\text{test}} = 140,393$), stratified on the attack label so that all 31 attack families appear in both partitions in exact proportion (preserving a 41.96:1 class imbalance). All 39 continuous features were standardized to zero mean and unit variance ($z = (x - \mu)/\sigma$). Mean and standard deviation were estimated on the training partition alone and then applied unchanged to the test partition, preventing test-set statistics from entering the training pipeline. Table~\ref{tab:dataset_stats} summarizes the partition statistics.
 \end{enumerate}
 
-\begin{table}[htbp]
+\begin{table*}[t]
 \centering
 \small
 \caption{CIC-IoT2023 dataset partitioning and statistical characteristics.}
 \label{tab:dataset_stats}
-\begin{tabular}{lrrr}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrr}
 \toprule
 \textbf{Metric} & \textbf{Training Set} & \textbf{Test Set} & \textbf{Total Corpus} \\
 \midrule
@@ -195,8 +177,8 @@ Total Attack Classes & 31 & 31 & 31 \\
 Input Features ($d$) & 39 & 39 & 39 \\
 Class Imbalance Ratio & 41.96 : 1 & 41.97 : 1 & 41.96 : 1 \\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{tabular*}
+\end{table*}
 
 \subsection{Formal Threat Model}
 \label{sec:threat_model}
@@ -228,9 +210,10 @@ Unlike naive feature-space attacks that alter arbitrary numbers, we enforce stri
 \end{enumerate}
 
 Formally, the set of allowed perturbations $\mathcal{A}_\varepsilon$ is:
-\begin{equation}
-    \mathcal{A}_\varepsilon = \left\{ \boldsymbol{\delta} \in \mathbb{R}^d \;\middle|\; \delta_j = 0 \; \forall j \notin \mathcal{F}_{\text{mut}}, \quad |\delta_i| \leq \varepsilon \; \forall i \in \mathcal{F}_{\text{mut}} \right\}
-\end{equation}
+\begin{multline}
+    \mathcal{A}_\varepsilon = \big\{ \boldsymbol{\delta} \in \mathbb{R}^d \mid \delta_j = 0 \;\forall j \notin \mathcal{F}_{\text{mut}},\\
+    |\delta_i| \leq \varepsilon \;\forall i \in \mathcal{F}_{\text{mut}} \big\}
+\end{multline}
 
 \subsubsection{Functional Attack Preservation Constraints}
 Beyond mathematical syntax and protocol validity, an adversarial perturbation must preserve the \textit{operational attack utility} in the physical problem space~\cite{sommer2010outside,pierazzi2020intriguing}. Altering statistical features to fool an intrusion detector is meaningless if the resulting traffic sequence ceases to accomplish its malicious objective. We formalize this through a class-specific operational validity predicate:
@@ -241,7 +224,7 @@ where $\mathcal{V}(\mathbf{x}_{\text{adv}}) = 1$ denotes that the perturbed vect
 \begin{equation}
     f_\theta(\mathbf{x}_{\text{adv}}) = 0 \quad \text{and} \quad \mathcal{V}(\mathbf{x}_{\text{adv}}) = 1
 \end{equation}
-Table~\ref{tab:functional_preservation} defines concrete operational criteria across all five attack archetypes.
+Table~\ref{tab:functional_preservation} defines the concrete operational criteria across all five attack archetypes.
 
 \subsection{Finding Mutable Features with SHAP}
 \label{sec:shap}
@@ -253,12 +236,12 @@ This concentration stems from characteristic IoT traffic profiles. Benign commun
 
 Although this concentration produces high clean benchmark discrimination, it establishes an operational shortcut: an adversary does not need to solve an unconstrained optimization problem, but only needs to pad packet durations or pace transmissions to shift flow counts across the tree's shallowest decision thresholds. Based on this ranking, we selected the top 15 continuous features as $\mathcal{F}_{\text{mut}}$, including \textit{Duration}, \textit{Tot size of bckwd packet}, \textit{Tot size of fwd packet}, \textit{Fwd Packet Length Max}, and inter-arrival times (\textit{Flow IAT Mean}, \textit{Bckwd IAT Mean}). These correspond to packet padding, jitter injection, and transmission pacing, which an attacker can implement in software without breaking application payloads.
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.96\textwidth]{figures/shap_beeswarm_publication.png}
+  \includegraphics[width=0.92\textwidth]{figures/shap_beeswarm_publication.png}
   \caption{SHAP beeswarm attribution for the baseline XGBoost classifier. The horizontal axis indicates the impact on model output (log-odds), with point color denoting feature magnitude. The single feature \texttt{Number} commands 92.25\% of total attribution mass, concentrating model decisions on packet counts.}
   \label{fig:shap}
-\end{figure}
+\end{figure*}
 
 \subsection{Feature-Constrained Genetic Algorithm Attack}
 \label{sec:ga_formulation}
@@ -281,9 +264,10 @@ Algorithm~\ref{alg:ga} shows the search loop. In each generation, candidate pert
     \item \textit{Early exit condition.} If any individual pushes predicted malice below 0.5 ($p_\theta < 0.5$), the search stops immediately and picks the candidate with the smallest $\ell_2$ norm. This saves substantial computation.
     \item \textit{Elitism.} The top 50\% of candidates ($P/2 = 150$) survive directly into the next generation.
     \item \textit{Crossover operator.} Surviving parents produce offspring through uniform crossover:
-    \begin{equation}
-        c^{\text{child}}_i = m_i \cdot c^{(p_1)}_i + (1 - m_i) \cdot c^{(p_2)}_i, \quad m_i \sim \operatorname{Bernoulli}(0.5)
-    \end{equation}
+    \begin{multline}
+        c^{\text{child}}_i = m_i \cdot c^{(p_1)}_i + (1 - m_i) \cdot c^{(p_2)}_i,\\
+        m_i \sim \operatorname{Bernoulli}(0.5)
+    \end{multline}
     \item \textit{Adaptive mutation.} Each mutable gene mutates with probability $p_m = 0.6$ by adding zero-mean Gaussian noise scaled to the budget $\varepsilon$:
     \begin{equation}
         c_i \leftarrow \operatorname{clip}\left(c_i + \mathcal{N}\left(0, (\varepsilon/3)^2\right), -\varepsilon, \varepsilon\right)
@@ -293,12 +277,12 @@ Algorithm~\ref{alg:ga} shows the search loop. In each generation, candidate pert
 
 Table~\ref{tab:ga_hyperparams} outlines the verified hyperparameter configuration.
 
-\begin{table}[htbp]
+\begin{table*}[t]
 \centering
 \small
 \caption{Verified hyperparameter configuration for the Genetic Algorithm.}
 \label{tab:ga_hyperparams}
-\begin{tabularx}{0.98\textwidth}{l l >{\raggedright\arraybackslash}X}
+\begin{tabularx}{\textwidth}{l l X}
 \toprule
 \textbf{Hyperparameter} & \textbf{Value} & \textbf{Operational Rationale} \\
 \midrule
@@ -314,7 +298,7 @@ Target Sample Slice ($N$) & 500 & Statistically verified evaluation slice provid
 Random Seeds & 42 (Primary) & Base seed; stochastic stability verified across 5 seeds $\{42, 101, 202, 303, 404\}$ with Wilson 95\% CIs \\
 \bottomrule
 \end{tabularx}
-\end{table}
+\end{table*}
 
 \begin{algorithm}[htbp]
 \caption{Feature-Constrained Multi-Objective Evolutionary Evasion (FCEE)}
@@ -356,7 +340,8 @@ When applied to gradient boosted decision trees, injecting discrete adversarial 
 To overcome this limitation, we introduce \textbf{Gaussian Subspace Smoothing (GSS)}. Instead of replicating static adversarial vectors, each synthesized adversarial instance $\mathbf{x}^* \in \mathcal{D}_{\text{adv}}$ is augmented by drawing multiple nearby samples from a continuous Gaussian distribution across the mutable feature subspace:
 \begin{align}
     \tilde{\mathbf{x}}^* &= \mathbf{x}^* + \boldsymbol{\eta}, \notag \\
-    \text{with } \boldsymbol{\eta}_i &\sim \mathcal{N}\left(0, (\varepsilon/6)^2\right) \;\forall i \in \mathcal{F}_{\text{mut}}, \quad \boldsymbol{\eta}_j = 0 \;\forall j \notin \mathcal{F}_{\text{mut}}
+    \boldsymbol{\eta}_i &\sim \mathcal{N}\!\left(0, (\varepsilon/6)^2\right) \;\forall i \in \mathcal{F}_{\text{mut}}, \quad
+    \boldsymbol{\eta}_j = 0 \;\forall j \notin \mathcal{F}_{\text{mut}}
 \end{align}
 
 Calibrating $\sigma = \varepsilon/6$ ensures that $99.7\%$ of the Gaussian probability mass falls within $\pm \varepsilon/2$ of the adversarial point, so smoothed vectors remain within the valid perturbation envelope. Instead of augmenting with isolated point vectors, retraining draws samples from a Gaussian distribution $\mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I})$ centered on each adversarial coordinate. This spreads training weight across the mutable subspace and prevents decision trees from memorizing individual attack coordinates.
@@ -376,12 +361,13 @@ We evaluate three tree ensembles alongside a deep neural network on the unpertur
 
 All models were trained on the complete training corpus ($N_{\text{train}} = 561,569$) and evaluated on the held-out test partition ($N_{\text{test}} = 140,393$). Table~\ref{tab:phase1_baseline} summarizes classification accuracy, positive-class F1-score, Weighted F1-score, clean Precision, clean Recall, Area Under the ROC Curve (ROC-AUC), and wall-clock training duration.
 
-\begin{table}[htbp]
+\begin{table*}[htbp]
 \centering
+\small
+\setlength{\tabcolsep}{4pt}
 \caption{Baseline classifier performance on held-out CIC-IoT2023 test set ($N_{\text{test}} = 140,393$). F1-Score corresponds to the positive attack class under 41.96:1 class imbalance.}
 \label{tab:phase1_baseline}
-\resizebox{0.96\textwidth}{!}{%
-\begin{tabular}{lccccccr}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lccccccr}
 \toprule
 \textbf{Model} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Weighted F1} & \textbf{Precision} & \textbf{Recall} & \textbf{ROC-AUC} & \textbf{Train Time} \\
 \midrule
@@ -389,16 +375,15 @@ Random Forest & 99.22\% & 99.60\% & 99.60\% & 99.61\% & 99.40\% & 0.9981 & 10.18
 XGBoost       & \textbf{99.25\%} & \textbf{99.62\%} & \textbf{99.62\%} & \textbf{99.63\%} & \textbf{99.40\%} & \textbf{0.9981} & 3.41 s \\
 LightGBM      & 99.24\% & 99.61\% & 99.61\% & 99.62\% & 99.20\% & 0.9980 & \textbf{1.99 s} \\
 \bottomrule
-\end{tabular}%
-}
-\end{table}
+\end{tabular*}
+\end{table*}
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.96\textwidth]{figures/fig01_baseline_performance.png}
+  \includegraphics[width=\textwidth]{figures/fig01_baseline_performance.png}
   \caption{Baseline performance comparison across tree ensemble models. (Left) Comparative metric evaluation illustrating near-identical performance across Accuracy, Precision, Recall, and F1-Score. (Right) Receiver Operating Characteristic (ROC) curves confirming superior discrimination with AUC values exceeding 0.9980 across all tree ensemble baselines.}
   \label{fig:baseline}
-\end{figure}
+\end{figure*}
 
 Table~\ref{tab:phase1_baseline} and Figure~\ref{fig:baseline} confirm that all three tree-based classifiers sustain high separation under unperturbed operational conditions, with accuracies exceeding 99.22\% and ROC-AUC values above 0.9980. XGBoost achieves the highest weighted F1 (99.62\%) and trains in 3.41 seconds. LightGBM converges in 1.99 seconds ($5.1\times$ faster than Random Forest) while sacrificing only 0.01\% accuracy, making it the most computationally efficient option. 
 
@@ -414,12 +399,13 @@ With nominal baselines confirmed, we now test how well these decision boundaries
 \subsection{Main Evasion Results and Recall Collapse}
 Table~\ref{tab:phase2_evasion} and Figure~\ref{fig:recall_drop} summarize the evasion results, tracking clean detection recall, post-attack adversarial recall, absolute recall degradation, clean/adversarial F1 scores, and Attack Success Rate (ASR).
 
-\begin{table}[htbp]
+\begin{table*}[htbp]
 \centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
 \caption{Adversarial evasion metrics under feature-constrained GA attack ($\varepsilon = 5.0, N=500$). Baseline Clean F1 reflects performance on this balanced slice. Wilson 95\% score intervals for ASR confirm statistically significant divergence across tree ensemble architectures.}
 \label{tab:phase2_evasion}
-\resizebox{0.96\textwidth}{!}{%
-\begin{tabular}{lcccccccr}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccccccr}
 \toprule
 \textbf{Model} & \textbf{Clean Rec.} & \textbf{Adv. Rec.} & \textbf{Rec. Drop} & \textbf{Clean F1} & \textbf{Adv. F1} & \textbf{F1 Drop} & \textbf{ASR} & \textbf{95\% CI (ASR)} \\
 \midrule
@@ -427,16 +413,15 @@ Random Forest & 99.40\% & 1.00\%  & 98.40 pp & 93.16\% & 1.74\%  & 91.42 pp & \t
 XGBoost       & 99.40\% & 44.00\% & 55.40 pp & 94.04\% & 56.41\% & 37.63 pp & \textbf{56.00\%} & [51.6\%, 60.3\%] \\
 LightGBM      & 99.20\% & 31.60\% & 67.60 pp & 93.85\% & 43.95\% & 49.90 pp & \textbf{68.40\%} & [64.2\%, 72.3\%] \\
 \bottomrule
-\end{tabular}%
-}
-\end{table}
+\end{tabular*}
+\end{table*}
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig06_recall_f1_asr_drop.png}
+  \includegraphics[width=\textwidth]{figures/fig06_recall_f1_asr_drop.png}
   \caption{Adversarial attack impact across tree architectures ($\varepsilon = 5.0, N=500$). (Left) Detection recall drop from clean baselines ($>99\%$) under adversarial perturbation. (Center) Severe degradation in F1-score. (Right) Attack Success Rate (ASR) showing that Random Forest suffers near-total collapse (99.00\%) while XGBoost demonstrates the highest relative resilience, restricting ASR to 56.00\% (44.00\% retained recall).}
   \label{fig:recall_drop}
-\end{figure}
+\end{figure*}
 
 Clean benchmark accuracy did not predict adversarial behavior. On unperturbed traffic, all three models detected over 99\% of intrusions. Under evolutionary search, their performance split sharply. Random Forest suffered near-total detection collapse: recall fell from 99.40\% to 1.00\%, giving a 99.00\% attack success rate. LightGBM also struggled, allowing 68.40\% evasion (31.60\% adversarial recall). XGBoost held up best among the three, restricting evasion to 56.00\% and retaining 44.00\% detection recall.
 
@@ -446,32 +431,31 @@ To determine how evasion efficacy scales with perturbation budget, we conduct an
 
 \begin{table}[htbp]
 \centering
-\small
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
 \caption{XGBoost evasion vulnerability across perturbation budget sweep ($\varepsilon \in [0.10, 6.00]$).}
 \label{tab:epsilon_sweep}
-\resizebox{0.82\textwidth}{!}{%
-\begin{tabular}{cccc}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}c r c >{\raggedright\arraybackslash}p{3.4cm}@{}}
 \toprule
-\makecell{\textbf{Perturbation}\\\textbf{Budget ($\varepsilon$)}} & \makecell{\textbf{ASR}\\\textbf{(\%)}} & \makecell{\textbf{Evasive Flows}\\\textbf{($N=500$)}} & \textbf{Operational Regime} \\
+\textbf{$\varepsilon$} & \textbf{ASR} & \textbf{Evasive} & \textbf{Operational Regime} \\
 \midrule
-0.10 & 1.40\%  & 7   & Sub-threshold Invariance Regime \\
-0.76 & 2.00\%  & 10  & Sub-threshold Invariance Regime \\
-1.41 & 2.20\%  & 11  & Sub-threshold Invariance Regime \\
-2.07 & 2.40\%  & 12  & Sub-threshold Invariance Regime \\
+0.10 & 1.40\%  & 7   & Sub-threshold Invariance \\
+0.76 & 2.00\%  & 10  & Sub-threshold Invariance \\
+1.41 & 2.20\%  & 11  & Sub-threshold Invariance \\
+2.07 & 2.40\%  & 12  & Sub-threshold Invariance \\
 2.72 & 2.40\%  & 12  & Invariant Plateau Region \\
 3.38 & 2.40\%  & 12  & Invariant Plateau Region \\
 4.03 & 2.40\%  & 12  & Decision Boundary Approach \\
-\textbf{4.69} & \textbf{63.20\%} & \textbf{316} & \textbf{Critical Phase Transition Threshold} \\
+\textbf{4.69} & \textbf{63.20\%} & \textbf{316} & \textbf{Critical Phase Transition} \\
 5.34 & 84.80\% & 424 & Saturated Evasion Regime \\
 6.00 & 87.60\% & 438 & Asymptotic Vulnerability Ceiling \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular*}
 \end{table}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{figures/fig03_epsilon_sensitivity.png}
+  \includegraphics[width=\columnwidth]{figures/fig03_epsilon_sensitivity.png}
   \caption{Epsilon sensitivity ablation curve for XGBoost. A sharp non-linear phase transition occurs at $\varepsilon \approx 4.69$, where ASR jumps precipitously from 2.40\% to 63.20\%. This threshold represents the critical perturbation distance required to traverse the primary split boundaries on \texttt{Number}.}
   \label{fig:epsilon}
 \end{figure}
@@ -488,16 +472,15 @@ Perturbation budgets below $\varepsilon < 4.69$ confine candidate vectors to the
 \label{sec:feature_ablation}
 Our core threat model restricts perturbations to a verified subspace of $m = |\mathcal{F}_{\text{mut}}| = 15$ continuous features prioritized by SHAP attributions (Table~\ref{tab:ga_hyperparams}). To investigate how attack efficacy and defensive stability scale with the dimensionality of this mutable subspace, we conduct an ablation sweep across $m \in \{3, 5, 10, 15, 20, 25\}$ under a fixed perturbation budget of $\varepsilon = 5.0$ on the $N=500$ evaluation slice. Table~\ref{tab:feature_count_ablation} details the comparative evasion outcomes against baseline XGBoost and defended AT-XGBoost.
 
-\begin{table}[htbp]
+\begin{table*}[htbp]
 \centering
-\small
-\setlength{\tabcolsep}{4.0pt}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
 \caption{Ablation of mutable feature subspace dimensionality ($m = |\mathcal{F}_{\text{mut}}| \in \{3, 5, 10, 15, 20, 25\}$) at fixed perturbation budget $\varepsilon = 5.0$ on the $N=500$ evaluation slice. Evasion scales rapidly from $m=3$ to $m=10$ before saturating near $m=15$, while Gaussian Subspace Smoothing maintains stable defense across all dimensionalities.}
 \label{tab:feature_count_ablation}
-\resizebox{0.96\textwidth}{!}{%
-\begin{tabular}{c >{\raggedright\arraybackslash}p{5.0cm} cccc >{\raggedright\arraybackslash}p{4.2cm}}
+\begin{tabularx}{\textwidth}{c >{\raggedright\arraybackslash}p{4.2cm} cccc >{\raggedright\arraybackslash}X}
 \toprule
-\multirow{2}{*}{\textbf{$|\mathcal{F}_{\text{mut}}|$}} & \makecell{\textbf{Primary Constituent}\\\textbf{Features}} & \multicolumn{2}{c}{\textbf{Baseline XGBoost}} & \multicolumn{2}{c}{\textbf{XGBoost (AT+GSS)}} & \makecell{\textbf{Dominant Trajectory}\\\textbf{\& Dynamics}} \\
+\multirow{2}{*}{\textbf{$|\mathcal{F}_{\text{mut}}|$}} & \multirow{2}{*}{\textbf{Primary Constituent Features}} & \multicolumn{2}{c}{\textbf{Baseline XGBoost}} & \multicolumn{2}{c}{\textbf{XGBoost (AT+GSS)}} & \multirow{2}{*}{\textbf{Dominant Trajectory \& Dynamics}} \\
 \cmidrule(lr){3-4} \cmidrule(lr){5-6}
 & & \textbf{Adv. Rec.} & \textbf{ASR} & \textbf{Adv. Rec.} & \textbf{ASR} & \\
 \midrule
@@ -508,10 +491,9 @@ Our core threat model restricts perturbations to a verified subspace of $m = |\m
 20 & + Sub-flow packet counts \& variance metrics & 41.80\% & 58.20\% & 98.60\% & \textbf{1.40\%} & Diminishing returns; marginal leaf splits \\
 25 & + Extended continuous protocol metrics & 40.60\% & 59.40\% & 98.40\% & \textbf{1.60\%} & Asymptotic search saturation ($<0.1\%$ SHAP) \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabularx}
 \vspace{2pt}\par\raggedright\footnotesize $^{*}$Evaluated on the $N=500$ ablation slice (6/500 evasions). On the $N=300$ adaptive defense evaluation (Table~\ref{tab:phase4_defense}), GSS achieves 1.33\% ASR (4/300 evasions).
-\end{table}
+\end{table*}
 
 The ablation demonstrates three key structural properties:
 \begin{enumerate}
@@ -525,7 +507,7 @@ To examine black-box evasion, we evaluate the transferability of adversarial exa
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{figures/fig02_transferability.png}
+  \includegraphics[width=\columnwidth]{figures/fig02_transferability.png}
   \caption{Cross-model adversarial transferability matrix. Adversarial examples crafted against an XGBoost surrogate transfer to LightGBM with moderate success but achieve only 2.00\% transfer ASR against Random Forest.}
   \label{fig:transferability}
 \end{figure}
@@ -547,20 +529,18 @@ Random Forest's transfer resistance comes from its split geometry being decorrel
 \subsection{Granular Per-Class Vulnerability Dissection}
 Figure~\ref{fig:perclass} details the per-class ASR across all 31 individual attack categories under white-box GA targeting ($\varepsilon = 5.0$). A comprehensive numeric breakdown of per-class sample allocations, functional validity pass rates, and pre- vs. post-defense evasion metrics is provided in the public code repository via \texttt{generate\_per\_class\_table.py}. 
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig04_per_class_vulnerability.png}
+  \includegraphics[width=\textwidth]{figures/fig04_per_class_vulnerability.png}
   \caption{Granular per-attack-class evasion vulnerability under white-box GA attack ($\varepsilon=5.0$, $N \leq 100$ per class) on baseline XGBoost. Classes are sorted by ascending vulnerability. Application-layer injection and reconnaissance categories suffer complete evasion (100.00\%), whereas volumetric DDoS and DoS categories retain high inherent robustness.}
   \label{fig:perclass}
-\end{figure}
+\end{figure*}
 
 Vulnerability varies widely across attack families:
-{\sloppy
 \begin{itemize}
     \item \textit{Volumetric flood attacks.} Volumetric transport floods, particularly \texttt{DDOS-RSTFINFLOOD} (0.00\% ASR), \texttt{DDOS-SYNONYMOUSIP\_FLOOD} (12.00\%), \texttt{DDOS-UDP\_FLOOD} (15.00\%), and \texttt{DDOS-SYN\_FLOOD} (17.00\%), exhibit pronounced intrinsic robustness. In these attacks, extreme packet rates and persistent flag signatures place flows deep within the malicious partition. Consequently, an attacker cannot evade detection within $\varepsilon = 5.0$.
     \item \textit{Application-layer attacks.} Conversely, application-layer and reconnaissance attacks, such as \texttt{SQLINJECTION}, \texttt{COMMANDINJECTION}, \texttt{BROWSERHIJACKING}, \texttt{BACKDOOR\_MALWARE}, \texttt{XSS}, \texttt{RECON-PORTSCAN}, and \texttt{MITM-ARPSPOOFING}, suffer \textbf{100.00\% ASR}. Because these attacks transmit small, sporadic payloads that closely mimic standard HTTP/DNS transactions, minute perturbations to flow duration or packet length push them into the benign cluster.
 \end{itemize}
-\par}
 
 \subsection{Operational Attack Validity Under Functional Protocol Preservation}
 \label{sec:functional_preservation}
@@ -568,28 +548,26 @@ A persistent limitation in adversarial intrusion detection literature is the con
 
 To establish the true operational risk, we reconstruct the physical flow characteristics (implied packet transmission rates, byte volumes, and session durations) from the perturbed adversarial vectors and evaluate them against domain-specific functional validity requirements. Table~\ref{tab:functional_preservation} details the functional preservation criteria, empirical pass rates, and comparative evasion rates across the five primary attack archetypes on the $N=500$ evaluation slice (the granular 31-class enumeration is reproduced by \texttt{generate\_per\_class\_table.py}).
 
-\begin{table}[htbp]
+\begin{table*}[htbp]
 \centering
-\small
+\scriptsize
 \setlength{\tabcolsep}{2.5pt}
 \caption{Functional protocol preservation and operational evasion rates across attack families under white-box GA attack ($\varepsilon = 5.0, N=500$). The pass rate quantifies the percentage of perturbed flows that retain operational attack efficacy. Valid ASR measures evasion strictly among functionally preserved flows.}
 \label{tab:functional_preservation}
-\resizebox{0.98\textwidth}{!}{%
-\begin{tabular}{l >{\raggedright\arraybackslash}p{3.8cm} >{\raggedright\arraybackslash}p{4.2cm} cccccc}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{1.9cm} >{\raggedright\arraybackslash}p{3.0cm} >{\raggedright\arraybackslash}p{3.7cm} cccccc@{}}
 \toprule
-\textbf{Attack Family} & \textbf{Representative Categories} & \textbf{Operational Validity Requirement} & \textbf{Slice ($n$)} & \textbf{Preserved ($n_v$)} & \textbf{Pass Rate} & \textbf{Raw ASR} & \textbf{Valid ASR} & \textbf{GSS Valid ASR} \\
+\textbf{Attack Family} & \textbf{Representative Categories} & \textbf{Operational Validity Requirement} & \makecell{\textbf{Slice}\\\textbf{($n$)}} & \makecell{\textbf{Pres.}\\\textbf{($n_v$)}} & \makecell{\textbf{Pass}\\\textbf{Rate}} & \makecell{\textbf{Raw}\\\textbf{ASR}} & \makecell{\textbf{Valid}\\\textbf{ASR}} & \makecell{\textbf{GSS}\\\textbf{Valid}} \\
 \midrule
 Volumetric Floods & DDoS-UDP, DDoS-SYN, DoS-TCP, Mirai & Sustained rate $\ge 100$ pps \& packet count $\ge 50$ & 300 & 44 & 14.67\% & 44.00\% & \textbf{13.64\%} & \textbf{0.00\%} \\
 Reconnaissance & Recon-PortScan, Recon-OSScan, HostDiscovery & $\ge 5$ distinct probes contacted; Mean IAT $\le 2.0$ s & 75 & 54 & 72.00\% & 68.00\% & 66.67\% & 1.85\% \\
-Brute Force & DictionaryBruteForce & $\ge 3$ credential exchanges; Fwd Packet Len $\ge 40$ B & 50 & 44 & 88.00\% & 86.00\% & 84.09\% & 2.27\% \\
+Brute Force & DictionaryBruteForce & $\ge 3$ credential exchanges; Fwd Pkt Len $\ge 40$ B & 50 & 44 & 88.00\% & 86.00\% & 84.09\% & 2.27\% \\
 Web Injections & SqlInjection, CommandInjection, XSS & Exploit payload intact ($\ge 120$ B); HTTP stream valid & 50 & 47 & 94.00\% & 98.00\% & \textbf{97.87\%} & \textbf{0.00\%} \\
 Botnet C2 & Mirai-Greeth\_flood, Mirai-UDP\_flood & C2 heartbeat maintained (IAT $\le 60$ s) \& burst volume & 25 & 10 & 40.00\% & 20.00\% & 20.00\% & 0.00\% \\
 \midrule
 \textbf{Aggregate} & \textbf{All 31 Unified Classes} & \textbf{Domain Operational Predicate $\mathcal{V}(\mathbf{x}_{\text{adv}}) = 1$} & \textbf{500} & \textbf{199} & \textbf{39.80\%} & \textbf{56.00\%} & \textbf{63.82\%} & \textbf{1.01\%} \\
 \bottomrule
-\end{tabular}%
-}
-\end{table}
+\end{tabular*}
+\end{table*}
 
 Evaluating perturbed traffic against physical deliverability criteria clarifies the actual threat posed by feature-space evasions:
 \begin{enumerate}
@@ -604,7 +582,7 @@ To confirm that GA evasion reflects guided search instead of random noise artifa
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{figures/fig05_ga_vs_random_baseline.png}
+  \includegraphics[width=\columnwidth]{figures/fig05_ga_vs_random_baseline.png}
   \caption{Multi-objective GA versus random noise baseline across perturbation budgets. At fixed benchmark budget $\varepsilon = 5.0$, the GA achieves 56.00\% ASR compared to only 2.00\% for random search, demonstrating a 54.00 percentage-point evolutionary advantage.}
   \label{fig:gavsrandom}
 \end{figure}
@@ -626,31 +604,29 @@ Due to extreme dataset class imbalance ($41.96:1$), the nominal decision thresho
 \subsection{Cross-Architecture Robustness Disparity}
 Table~\ref{tab:crossarch} summarizes clean baseline performance, while Figure~\ref{fig:crossattack} presents attack evasion metrics under identical GA parameters ($\varepsilon = 5.0, N=500$).
 
-\begin{table}[htbp]
+\begin{table*}[htbp]
 \centering
-\small
-\setlength{\tabcolsep}{4.0pt}
+\scriptsize
+\setlength{\tabcolsep}{1.5pt}
 \caption{Cross-architecture comparative evaluation: XGBoost (Tree Ensemble) versus Deep MLP (Neural Network) under feature-constrained GA attack ($\varepsilon = 5.0, N=500$) with Wilson 95\% score intervals for ASR.}
 \label{tab:crossarch}
-\resizebox{0.96\textwidth}{!}{%
-\begin{tabular}{lcccccccr}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccccccr}
 \toprule
-\textbf{Architecture} & \textbf{Clean Acc.} & \textbf{F1-Score} & \textbf{ROC-AUC} & \textbf{Threshold ($\tau$)} & \textbf{Clean Rec.} & \textbf{Adv. Rec.} & \textbf{ASR} & \textbf{95\% CI (ASR)} \\
+\textbf{Architecture} & \makecell{\textbf{Clean}\\\textbf{Acc.}} & \makecell{\textbf{F1-}\\\textbf{Score}} & \makecell{\textbf{ROC-}\\\textbf{AUC}} & \makecell{\textbf{Threshold}\\\textbf{($\tau$)}} & \makecell{\textbf{Clean}\\\textbf{Rec.}} & \makecell{\textbf{Adv.}\\\textbf{Rec.}} & \textbf{ASR} & \makecell{\textbf{95\% CI}\\\textbf{(ASR)}} \\
 \midrule
-XGBoost (Tree) & \textbf{99.25\%} & \textbf{99.62\%} & \textbf{0.9981} & 0.5000 (Default) & \textbf{99.40\%} & \textbf{44.00\%} & \textbf{56.00\%} & [51.6\%, 60.3\%] \\
-Deep MLP (Nominal) & 97.45\% & 92.10\% & 0.9969 & 0.5000 (Nominal) & 99.10\% & 5.40\%  & \textbf{94.60\%} & [92.3\%, 96.3\%] \\
+XGBoost (Tree) & \textbf{99.25\%} & \textbf{99.62\%} & \textbf{0.9981} & 0.5000 (Def.) & \textbf{99.40\%} & \textbf{44.00\%} & \textbf{56.00\%} & [51.6\%, 60.3\%] \\
+Deep MLP (Nominal) & 97.45\% & 92.10\% & 0.9969 & 0.5000 (Nom.) & 99.10\% & 5.40\%  & \textbf{94.60\%} & [92.3\%, 96.3\%] \\
 Deep MLP (Calibrated) & 98.02\% & 89.38\% & 0.9969 & 0.9722 (Youden)  & 98.00\% & 0.00\%  & \textbf{100.00\%} & [99.2\%, 100.0\%] \\
 \bottomrule
-\end{tabular}%
-}
-\end{table}
+\end{tabular*}
+\end{table*}
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig10_cross_arch_attack_comparison.png}
+  \includegraphics[width=\textwidth]{figures/fig10_cross_arch_attack_comparison.png}
   \caption{Cross-architecture adversarial attack comparison ($\varepsilon = 5.0, N=500$). (Left) Attack Success Rate showing complete collapse of Deep MLP (100.00\%) versus partial resilience in XGBoost (56.00\%). (Center) Detection recall collapse. (Right) Post-attack confidence distributions illustrating that the GA suppresses MLP confidence below the evasion threshold across all attack samples.}
   \label{fig:crossattack}
-\end{figure}
+\end{figure*}
 
 Under unperturbed conditions, both architectures achieve comparable discrimination: XGBoost reaches 99.25\% accuracy with a 0.9981 ROC-AUC, while the MLP attains 98.02\% accuracy and a 0.9969 ROC-AUC (Table~\ref{tab:crossarch}). The two classifiers are effectively indistinguishable on standard held-out test data.
 
@@ -660,8 +636,8 @@ The explanation lies in decision surface geometry:
 \begin{itemize}
     \item \textit{Continuous neural architectures.} The MLP models classification probabilities via nested compositions of affine transformations and non-linear activation functions:
     \begin{align}
-        \mathbf{h}_l &= \operatorname{ReLU}(\mathbf{W}_l \mathbf{h}_{l-1} + \mathbf{b}_l), \quad l \in \{1, 2, 3, 4\} \\
-        f_{\text{MLP}}(\mathbf{x}) &= \sigma\left(\mathbf{w}_5^\top \mathbf{h}_4 + b_5\right)
+        \mathbf{h}_l &= \operatorname{ReLU}(\mathbf{W}_l \mathbf{h}_{l-1} + \mathbf{b}_l),\; l \in \{1, 2, 3, 4\} \\
+        f_{\text{MLP}}(\mathbf{x}) &= \sigma\!\left(\mathbf{w}_5^\top \mathbf{h}_4 + b_5\right)
     \end{align}
     where $\mathbf{h}_0 = \mathbf{x}$.
     This architectural inductive bias produces a continuous, differentiable loss landscape over the input space $\mathbb{R}^d$. A continuous change in any mutable feature coordinate $x_i$ produces an immediate, non-zero gradient in output probability:
@@ -684,24 +660,24 @@ This divergence is further clarified by examining epsilon sensitivity (Figure~\r
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{figures/fig11_cross_arch_epsilon_sensitivity.png}
+  \includegraphics[width=\columnwidth]{figures/fig11_cross_arch_epsilon_sensitivity.png}
   \caption{Cross-architecture epsilon sensitivity: XGBoost versus Deep MLP. The MLP exhibits immediate linear vulnerability escalation even at minimal perturbation budgets, whereas XGBoost maintains resilience until the critical phase transition threshold.}
   \label{fig:crossepsilon}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{figures/fig12_confidence_degradation.png}
+  \includegraphics[width=\columnwidth]{figures/fig12_confidence_degradation.png}
   \caption{Confidence degradation dynamics under adversarial search (mean $\pm 1$ standard deviation, $N=150$). Deep MLP confidence falls below the evasion threshold at $\varepsilon \approx 2.50$, whereas XGBoost maintains robust confidence margins until $\varepsilon \approx 4.69$.}
   \label{fig:confdeg}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig13_per_class_arch_heatmap.png}
+  \includegraphics[width=\textwidth]{figures/fig13_per_class_arch_heatmap.png}
   \caption{Comparative per-class ASR heatmap: XGBoost versus Deep MLP across 31 attack classes. Deep MLP shows pervasive susceptibility across nearly all attack types, whereas XGBoost confines vulnerability primarily to low-rate application attacks.}
   \label{fig:perclass_arch}
-\end{figure}
+\end{figure*}
 
 Figure~\ref{fig:crossepsilon} and Figure~\ref{fig:confdeg} together confirm that the MLP lacks the piecewise-constant protective structure of tree models. Its continuous activation functions provide the GA with consistent gradient-aligned feedback, enabling steady confidence suppression. Under the confidence degradation curve (Figure~\ref{fig:confdeg}), mean MLP prediction confidence falls below the nominal 0.50 classification decision threshold at $\varepsilon \approx 2.50$. XGBoost, by contrast, retains high decision confidence until perturbations reach the primary root split boundary at $\varepsilon \approx 4.69$.
 
@@ -731,9 +707,10 @@ The smoothed ensemble prediction is formalized as the expected prediction under 
     \hat{f}_{\text{GSS}}(\mathbf{x}) = \mathbb{E}_{\boldsymbol{\eta} \sim \mathcal{N}\left(\mathbf{0}, \sigma^2 \mathbf{I}\right)}\left[ f_\theta\left(\mathbf{x} + \mathbf{P}\boldsymbol{\eta}\right) \right]
 \end{equation}
 Because integrating analytically across non-differentiable step boundaries is computationally intractable, we implement an empirical realization during model training:
-\begin{equation}
-    \tilde{\mathbf{x}}_k = \operatorname{clip}\left(\mathbf{x} + \mathbf{P}\boldsymbol{\eta}_k, \, \mathbf{x}_{\min}, \, \mathbf{x}_{\max}\right), \quad \boldsymbol{\eta}_k \sim \mathcal{N}\left(\mathbf{0}, \sigma^2 \mathbf{I}\right)
-\end{equation}
+\begin{multline}
+    \tilde{\mathbf{x}}_k = \operatorname{clip}\!\left(\mathbf{x} + \mathbf{P}\boldsymbol{\eta}_k, \, \mathbf{x}_{\min}, \, \mathbf{x}_{\max}\right),\\
+    \boldsymbol{\eta}_k \sim \mathcal{N}\!\left(\mathbf{0}, \sigma^2 \mathbf{I}\right)
+\end{multline}
 where coordinate-wise clipping preserves domain-specific physical protocol bounds. By replacing discrete, isolated adversarial points with continuous density clouds within $\operatorname{span}(\mathbf{P})$, GSS prevents tree-building split algorithms from carving isolated leaf partitions around individual attack instances. This regularizes tree growth, suppresses leaf-level overfitting, and stabilizes decision boundaries without degrading clean classification margins.
 
 \subsection{Augmentation Rate Ablation and Pareto Optimization}
@@ -741,7 +718,7 @@ To establish the trade-off between robustness and clean utility, we conduct an a
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{figures/fig15_security_utility_tradeoff.png}
+  \includegraphics[width=\columnwidth]{figures/fig15_security_utility_tradeoff.png}
   \caption{Security-utility trade-off curve across adversarial augmentation rates. The primary axis tracks clean detection accuracy, while the secondary axis tracks ASR. The 20\% augmentation rate provides the empirical Pareto-optimal operating point, which minimizes ASR while fully preserving clean accuracy.}
   \label{fig:tradeoff}
 \end{figure}
@@ -752,16 +729,15 @@ Figure~\ref{fig:tradeoff} shows that clean accuracy remains stable across all au
 \label{sec:defense_eval}
 To evaluate defensive resilience under rigorous conditions, we subject the defended models to fresh, adaptive white-box GA attacks generated specifically against the retrained models ($N=300$ attack flows, $N=300$ benign flows, $\varepsilon = 5.0$). To isolate the contribution of Gaussian Subspace Smoothing from standard retraining, we include an explicit \textbf{Standard Adversarial Training (Standard AT)} control: retraining on the raw adversarial set $\mathcal{D} \cup \mathcal{D}_{\text{adv}}$ under the identical 20\% augmentation budget ($r=20\%$) and $\varepsilon = 5.0$, but without stochastic smoothing. To ensure statistical reliability and guard against single-sample bias, experiments were evaluated across 5 random seeds $\{42, 101, 202, 303, 404\}$, with binomial proportion metrics reported alongside Wilson 95\% score confidence intervals. Table~\ref{tab:phase4_defense} and Figure~\ref{fig:defensecore} report comparative performance, statistical confidence intervals, and tree complexity metrics.
 
-\begin{table}[htbp]
+\begin{table*}[htbp]
 \centering
-\small
-\setlength{\tabcolsep}{3.8pt}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
 \caption{Defense summary: Baseline versus Standard Adversarial Training (Standard AT without GSS) versus Gaussian Subspace Smoothing (AT+GSS) under adaptive white-box GA attack ($\varepsilon = 5.0, N=300$). Clean recall reflects the $N=300$ evaluation slice (full corpus clean recall is 99.40\%, Table~\ref{tab:phase1_baseline}). Wilson 95\% score intervals for ASR and tree complexity metrics (mean depth and total leaves) confirm that standard retraining induces leaf-level overfitting and degrades clean utility, whereas GSS regularizes tree geometry and suppresses evasion.}
 \label{tab:phase4_defense}
-\resizebox{0.96\textwidth}{!}{%
-\begin{tabular}{llccccccr}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llccccccr}
 \toprule
-\textbf{Model} & \textbf{Defense Configuration} & \textbf{Clean Rec.} & \textbf{Adv. Rec.} & \textbf{ASR (Micro)} & \textbf{95\% CI (ASR)} & \textbf{Macro ASR} & \textbf{Mean Depth} & \textbf{Leaves} \\
+\textbf{Model} & \makecell{\textbf{Defense}\\\textbf{Configuration}} & \makecell{\textbf{Clean}\\\textbf{Rec.}} & \makecell{\textbf{Adv.}\\\textbf{Rec.}} & \makecell{\textbf{ASR}\\\textbf{(Micro)}} & \makecell{\textbf{95\% CI}\\\textbf{(ASR)}} & \makecell{\textbf{Macro}\\\textbf{ASR}} & \makecell{\textbf{Mean}\\\textbf{Depth}} & \textbf{Leaves} \\
 \midrule
 XGBoost & Baseline (None) & 99.33\% & 58.33\% & 41.67\% & [36.2\%, 47.3\%] & 62.13\% & 6.8 & 2,418 \\
 XGBoost & Standard AT (No GSS) & 97.67\% & 85.33\% & 14.67\% & [11.0\%, 19.2\%] & 43.87\% & 9.4 & 3,460 \\
@@ -771,16 +747,15 @@ Deep MLP & Baseline (None) & 98.00\% & 0.00\% & 100.00\% & [98.7\%, 100\%] & 100
 Deep MLP & Standard AT (No GSS) & 96.33\% & 41.67\% & 58.33\% & [52.7\%, 63.8\%] & 67.42\% & \textendash{} & \textendash{} \\
 Deep MLP & AT + GSS (Proposed) & 98.00\% & 55.00\% & 45.00\% & [39.4\%, 50.7\%] & 52.19\% & \textendash{} & \textendash{} \\
 \bottomrule
-\end{tabular}%
-}
-\end{table}
+\end{tabular*}
+\end{table*}
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig14_defense_core_comparison.png}
+  \includegraphics[width=\textwidth]{figures/fig14_defense_core_comparison.png}
   \caption{Core defense evaluation across architectures (3-panel): (Left) Clean recall is fully preserved under GSS, whereas standard AT incurs a utility penalty. (Center) ASR drops substantially under defense, with AT-XGBoost reaching 1.33\%. (Right) Adversarial recall under adaptive attack reaches 98.67\% for AT-XGBoost.}
   \label{fig:defensecore}
-\end{figure}
+\end{figure*}
 
 The experimental results in Table~\ref{tab:phase4_defense} resolve the fundamental question of why standard adversarial training fails on decision tree ensembles:
 \begin{itemize}
@@ -793,7 +768,7 @@ Figure~\ref{fig:radar} presents a five-dimensional radar profile summarizing Cle
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{figures/fig18_radar_defense_profile.png}
+  \includegraphics[width=\columnwidth]{figures/fig18_radar_defense_profile.png}
   \caption{Multi-dimensional radar defense profile comparing four model configurations across Clean Recall, Adversarial Recall, Robustness ($100-\text{ASR}$), F1-Score, and AUC. AT-XGBoost (green boundary) matches or exceeds the other three models on all five axes.}
   \label{fig:radar}
 \end{figure}
@@ -801,12 +776,12 @@ Figure~\ref{fig:radar} presents a five-dimensional radar profile summarizing Cle
 \subsection{Per-Class Defense Efficacy and Residual Risk Analysis}
 Figure~\ref{fig:perclassdefense} illustrates per-class ASR before and after defense across all 31 attack categories (complete numeric metrics and confidence intervals are generated by \texttt{generate\_per\_class\_table.py}).
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.96\textwidth,height=0.68\textheight,keepaspectratio]{figures/fig16_per_class_defense_heatmap.png}
+  \includegraphics[width=0.88\textwidth,height=0.62\textheight,keepaspectratio]{figures/fig16_per_class_defense_heatmap.png}
   \caption{Per-class defense effectiveness heatmap comparing baseline XGBoost versus AT-XGBoost across all 31 attack classes. Volumetric DDoS, DoS, and reconnaissance attacks are hardened to 0.00\% ASR, while application-layer injection categories retain residual vulnerability.}
   \label{fig:perclassdefense}
-\end{figure}
+\end{figure*}
 
 The analysis indicates that GSS adversarial training successfully eliminates vulnerability across all network-layer attack families:
 \begin{itemize}
@@ -823,7 +798,7 @@ Figure~\ref{fig:transfer} presents the complete cross-architecture defense trans
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.88\textwidth]{figures/fig17_cross_arch_transfer_matrix.png}
+  \includegraphics[width=\columnwidth]{figures/fig17_cross_arch_transfer_matrix.png}
   \caption{Cross-architecture adversarial transfer matrix. Rows represent surrogate models used to craft adversarial examples; columns represent victim models. Defended models (rightmost two columns) maintain near-zero transferability ($<1.50\%$).}
   \label{fig:transfer}
 \end{figure}
@@ -838,12 +813,12 @@ This section provides three complementary analyses to characterize the structura
 \subsection{t-SNE Cluster Topology of Adversarial Feature Space}
 Figure~\ref{fig:tsne} presents a t-Distributed Stochastic Neighbor Embedding (t-SNE) visualization of $N=1,400$ total flow instances: 200 clean benign flows (green), 600 clean malicious flows (blue), and 600 GA-generated adversarial flows (red). Feature dimensions were pre-conditioned via Principal Component Analysis (PCA) to 20 components prior to t-SNE projection.
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig19_tsne_feature_space.png}
+  \includegraphics[width=\textwidth]{figures/fig19_tsne_feature_space.png}
   \caption{t-SNE cluster embedding of network traffic feature space ($N=1,400$ samples: 200 benign, 600 clean malicious, 600 adversarial). (Left) Discrete cluster scatter plot. (Right) Kernel Density Estimation (KDE) contour overlay showing adversarial flows (red) migrating into the benign density envelope (green) while respecting feature constraints.}
   \label{fig:tsne}
-\end{figure}
+\end{figure*}
 
 The visualization reveals three key spatial structures:
 \begin{enumerate}
@@ -855,12 +830,12 @@ The visualization reveals three key spatial structures:
 \subsection{Pareto Frontier Analysis and Operational Risk Modeling}
 Figure~\ref{fig:pareto} presents the Pareto frontier analysis. We plot ASR against perturbation budget $\varepsilon$ across all four model variants.
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig20_pareto_frontier.png}
+  \includegraphics[width=\textwidth]{figures/fig20_pareto_frontier.png}
   \caption{Pareto frontier analysis: ASR versus perturbation budget for all four models. (Left) Continuous response trajectories across $\varepsilon \in [0, 6]$. (Right) Discrete Pareto-optimal operating points. AT-XGBoost (green) completely dominates the parameter space and remains securely within the shaded low-risk operational regime ($\text{ASR} < 5.0\%$) across all budgets up to $\varepsilon = 5.0$.}
   \label{fig:pareto}
-\end{figure}
+\end{figure*}
 
 The operational parameter space is divided into risk regimes, defining a robust operational band where $\text{ASR} < 5.0\%$. Clean MLP exits this low-risk band ($\text{ASR} < 5.0\%$) at minimal perturbation budgets ($\varepsilon \leq 0.10$, Figure~\ref{fig:pareto}). Clean XGBoost maintains robustness until $\varepsilon \approx 4.0$, where the sharp phase transition induces rapid evasion. In contrast, \textbf{AT-XGBoost demonstrates marked stability}: it remains within the low-risk regime across all evaluated perturbation budgets up to $\varepsilon = 5.0$.
 
@@ -869,31 +844,32 @@ To evaluate how GSS restructuring alters model decision logic, we analyze the fe
 
 \begin{table}[htbp]
 \centering
-\footnotesize
+\scriptsize
+\setlength{\tabcolsep}{2pt}
 \renewcommand{\arraystretch}{1.05}
 \caption{Feature importance attribution drift following GSS adversarial training.}
 \label{tab:drift}
-\begin{tabular}{lccc}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{3.4cm}ccc@{}}
 \toprule
-\textbf{Feature Dimension} & \textbf{Baseline} & \textbf{AT-XGB} & \textbf{Drift} \\
+\textbf{Feature Dimension} & \textbf{Base.} & \textbf{AT-XGB} & \textbf{Drift} \\
 \midrule
 \texttt{Number} (Packet Count) & 92.25\% & 68.14\% & $-24.11$ pp \\
-\texttt{Tot size bckwd packet} & 2.15\% & 8.42\% & $+6.27$ pp \\
+\texttt{Tot size bckwd pkt} & 2.15\% & 8.42\% & $+6.27$ pp \\
 \texttt{Flow IAT Mean} & 1.48\% & 6.91\% & $+5.43$ pp \\
 \texttt{Duration} & 1.12\% & 5.15\% & $+4.03$ pp \\
 \texttt{Fwd Pkt Length Max} & 0.85\% & 4.22\% & $+3.37$ pp \\
 \texttt{Bckwd IAT Mean} & 0.62\% & 3.88\% & $+3.26$ pp \\
-Other Features (Combined) & 1.53\% & 3.28\% & $+1.75$ pp \\
+Other Features & 1.53\% & 3.28\% & $+1.75$ pp \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \end{table}
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=0.98\textwidth]{figures/fig21_feature_importance_drift.png}
+  \includegraphics[width=\textwidth]{figures/fig21_feature_importance_drift.png}
   \caption{Feature importance drift induced by GSS adversarial training. (Left) Side-by-side comparison of baseline XGBoost versus AT-XGBoost. (Right) Drift directionality showing de-biasing of the dominant \texttt{Number} feature and broader attribution across secondary temporal and volumetric dimensions.}
   \label{fig:drift}
-\end{figure}
+\end{figure*}
 
 The attribution data reveals why GSS works. In the baseline model, XGBoost relied almost entirely on \texttt{Number} (92.25\% importance). Retraining with GSS forces the boosting algorithm to place splits across a broader feature set: \texttt{Number} falls from 92.25\% to 68.14\% importance. The released weight moves across secondary features: backward packet volume (+6.27 pp), flow inter-arrival mean (+5.43 pp), duration (+4.03 pp), and forward packet length max (+3.37 pp). Spreading decision weight across multiple features prevents the attacker from evading detection through rate throttling alone.
 
@@ -966,25 +942,23 @@ Four directions merit further investigation: (i) validating packet-level perturb
 
 % ─────────────────────────────────────────────────────────────
 
-\section*{CRediT Authorship Contribution Statement}
-\noindent\textbf{Dhananjay Kadge:} Conceptualized the study, developed the attack and defense algorithms, conducted all empirical experiments, performed the formal data analysis, and wrote the original manuscript draft.
-
-\vspace{0.35em}
-\noindent\textbf{Monali Maid:} Provided overall project supervision, contributed to methodological design, reviewed the statistical evaluation and theoretical modeling, and edited the manuscript. Both authors reviewed and approved the final submission.
-
-\section*{Declaration of Competing Interest}
-The authors report no financial interests or personal relationships that could be perceived to influence the work reported here.
-
-\section*{Data Availability Statement}
-The open-source repository at \url{https://github.com/DHANANJAY-2006/adversarial-iot-ids-robustness} contains the end-to-end data curation pipeline, the genetic algorithm implementation, trained model weights, evaluation seeds for all tables, and visualization scripts for all figures. The raw CIC-IoT2023 packet capture telemetry is publicly available from the Canadian Institute for Cybersecurity: \url{https://www.unb.ca/cic/datasets/iotdataset-2023.html}.
-
-\section*{Acknowledgements}
+\bmhead{Acknowledgements}
 The authors express their gratitude to the Department of Computer Science and Engineering, School of Engineering and Technology, MGM University, for providing high-performance computational infrastructure. We also thank the Canadian Institute for Cybersecurity (CIC) at the University of New Brunswick for providing the CIC-IoT2023 dataset.
 
-\section*{Declaration of Generative AI in Scientific Writing}
-During manuscript preparation, the authors utilized generative AI solely for grammatical refinement, language polishing, and formatting assistance. All research hypotheses, algorithmic designs, software implementations, empirical experiments, and analytical conclusions were conceived and executed independently by the authors, who critically evaluated and take complete ownership of the published content.
+\section*{Declarations}
+
+\begin{itemize}
+\item \textbf{Funding:} The authors did not receive support from any organization for the submitted work.
+\item \textbf{Competing interests:} The authors have no relevant financial or non-financial interests to disclose.
+\item \textbf{Ethics approval and consent to participate:} Not applicable.
+\item \textbf{Consent for publication:} Not applicable.
+\item \textbf{Data availability:} The raw CIC-IoT2023 packet capture telemetry is publicly available from the Canadian Institute for Cybersecurity (\url{https://www.unb.ca/cic/datasets/iotdataset-2023.html}). Processed data partitions and experimental outputs are openly hosted at \url{https://github.com/DHANANJAY-2006/adversarial-iot-ids-robustness}.
+\item \textbf{Materials availability:} Not applicable.
+\item \textbf{Code availability:} The complete data curation pipeline, genetic algorithm implementation, trained model weights, deterministic evaluation seeds, and visualization scripts are publicly available at \url{https://github.com/DHANANJAY-2006/adversarial-iot-ids-robustness}.
+\item \textbf{Author contribution:} \textbf{Dhananjay Kadge} conceptualized the study, developed the attack and defense algorithms, conducted all empirical experiments, performed the formal data analysis, and wrote the original manuscript draft. \textbf{Monali Maid} provided overall project supervision, contributed to methodological design, reviewed the statistical evaluation and theoretical modeling, and edited the manuscript. Both authors reviewed and approved the final manuscript.
+\item \textbf{Use of generative AI in scientific writing:} During manuscript preparation, the authors utilized generative AI solely for grammatical refinement, language polishing, and formatting assistance. All research hypotheses, algorithmic designs, software implementations, empirical experiments, and analytical conclusions were conceived and executed independently by the authors, who critically evaluated and take full responsibility for the published content.
+\end{itemize}
 
 \bibliography{references}
 
-\clearpage
 \end{document}
