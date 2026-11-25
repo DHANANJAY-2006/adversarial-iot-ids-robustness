@@ -1,13 +1,8 @@
-%% Springer Nature sn-jnl Template
-%% Journal: The Journal of Supercomputing
-%% Manuscript: Adversarial Robustness of Tree-Based Intrusion Detection Systems
-%%             Under Feature-Constrained Evasion Attacks
-%% Format: Official Springer Nature 2-Column Layout (iicol)
-
 \documentclass[iicol,pdflatex,sn-mathphys-num]{sn-jnl}
 
 \usepackage{graphicx}%
 \usepackage{multirow}%
+\usepackage{mathptmx}
 \usepackage{amsmath,amssymb,amsfonts}%
 \usepackage{amsthm}%
 \usepackage{mathrsfs}%
@@ -39,7 +34,7 @@
 
 \affil*[1]{\orgdiv{Department of Computer Science and Engineering, School of Engineering and Technology}, \orgname{MGM University}, \orgaddress{\city{Chhatrapati Sambhajinagar}, \postcode{431001}, \state{Maharashtra}, \country{India}}}
 
-\abstract{Flow-based intrusion detection systems in Internet of Things (IoT) networks rely heavily on tree ensembles that exceed 99\% accuracy on clean benchmarks. However, unconstrained adversarial evaluations produce malformed packets that middleboxes drop before detection. We evaluate Random Forest, XGBoost, LightGBM, and a deep multilayer perceptron across 701,962 flows and 31 attack classes from the 105-device CIC-IoT2023 testbed under a multi-objective genetic algorithm restricted strictly to continuous, transport-valid flow statistics. XGBoost exhibits a sharp phase transition at perturbation budget $\varepsilon = 4.69$, jumping from 2.40\% to 63.20\% attack success rate. Random Forest blocks 98\% of surrogate transfers from XGBoost yet fails under direct query (99.00\% evasion), while the neural network collapses completely (100.00\% evasion). Functional audits show that 85\% of evasive volumetric floods lose denial-of-service capability, whereas web injections retain 94\% viability. Finally, Gaussian Subspace Smoothing reduces XGBoost evasion from 41.67\% to 1.33\% while preserving 99.33\% clean recall.}
+\abstract{In IoT networks, flow-based intrusion detection is overwhelmingly built on gradient-boosted trees. On benchmarks such as CIC-IoT2023, these models post detection rates above 99\% almost without exception. This investigation evaluates classifier resilience when adversarial modifications are strictly restricted to continuous flow features that preserve underlying transport-layer semantics and physical packet deliverability. Across 701,962 clean flow records from 105 physical devices, we evaluate Random Forest, XGBoost, LightGBM, and a deep MLP against a multi-objective genetic algorithm restricted strictly to mutable flow statistics. Under these constraints, XGBoost holds flat at 2.40\% evasion out to a perturbation budget of four standard deviations and then escalates abruptly: evasion jumps from 2.40\% to 63.20\% between $\varepsilon = 4.03$ and $\varepsilon = 4.69$ as perturbations cross root splits on packet counts. Random Forest presents an asymmetric vulnerability profile: it stops 98\% of surrogate transfers from XGBoost yet admits 99.00\% evasion under direct white-box query access. Deep neural networks collapse completely (100.00\% attack success rate, zero retained recall) under identical constraints. Operational validity audits further show that over 85\% of volumetric flood evasions are self-defeating degenerate flows that throttle packet rates down to benign levels, whereas low-rate web injections retain 94\% functional exploit validity. To harden tree models without leaf-level overfitting, we introduce Gaussian Subspace Smoothing (GSS), which injects Gaussian noise exclusively across the mutable subspace during training. Retrained with GSS, XGBoost reduces adversarial evasion from 41.67\% to 1.33\% (macro-average across all 31 classes declines from 62.13\% to 30.39\%) while holding clean detection recall at 99.33\%. The project repository (\url{https://github.com/DHANANJAY-2006/adversarial-iot-ids-robustness}) contains the complete pipeline, trained model weights, experimental seeds, and figure generation scripts.}
 
 \keywords{Adversarial evasion, Gradient-boosted decision trees, IoT intrusion detection, CICIoT2023, Gaussian subspace smoothing, Protocol-constrained attacks}
 
@@ -47,7 +42,6 @@
 
 \section{Introduction}
 \label{sec:intro}
-% ─────────────────────────────────────────────────────────────
 
 Tree ensembles dominate operational network intrusion detection. In production Internet of Things (IoT) environments, models such as Random Forest, XGBoost, and LightGBM inspect traffic at line rates~\cite{breiman2001random,chen2016xgboost,ke2017lightgbm,hussain2020survey}. Tabular flow summaries suit their inductive biases: trees handle mixed numerical scales natively, train in minutes, evaluate flows in microseconds, and post clean detection rates above 99\% on curated benchmarks~\cite{ring2019survey}.
 
@@ -135,10 +129,8 @@ Al-Haija \& Al-Dmour~\cite{alhaija2024adversarial} & CIC-IoT2023 & FGSM / PGD & 
 \end{tabularx}
 \end{table*}
 
-% ─────────────────────────────────────────────────────────────
 \section{Methodology and Threat Model}
 \label{sec:methodology}
-% ─────────────────────────────────────────────────────────────
 
 Evaluating evasion under realistic protocol constraints requires tying feature edits to physical network mechanics. Below, we formalize our dataset pipeline, threat model, evolutionary search algorithm, and the Gaussian Subspace Smoothing defense. Figure~\ref{fig:overview} presents the architectural overview of the full research pipeline.
 
@@ -352,10 +344,8 @@ The augmented training dataset $\mathcal{D}_{\text{GSS}}$ is constructed as:
 \end{equation}
 with multi-scale adversarial examples generated across $\varepsilon \in \{1.0, 2.0, 3.0, 5.0\}$ to guarantee robustness across the entire perturbation continuum.
 
-% ─────────────────────────────────────────────────────────────
 \section{Baseline IDS Performance Characterization}
 \label{sec:phase1}
-% ─────────────────────────────────────────────────────────────
 
 We evaluate three tree ensembles alongside a deep neural network on the unperturbed test partition. All three ensembles were configured with 100 estimators: Random Forest (maximum depth 15, Gini impurity criterion, balanced class weighting~\cite{breiman2001random}), XGBoost (maximum depth 10, learning rate $\eta = 0.1$, subsample ratio 0.8, histogram binning~\cite{chen2016xgboost}), and LightGBM (maximum depth 15, learning rate $\eta = 0.1$, leaf-wise growth, Exclusive Feature Bundling enabled~\cite{ke2017lightgbm}). The deep neural baseline is a four-layer Multi-Layer Perceptron (MLP) with layer dimensions 39-512-256-128-64-1, ReLU activations, dropout probability 0.2, Adam optimization (learning rate $10^{-3}$, batch size 4096), and a Youden-optimal decision threshold of $\tau = 0.9722$.
 
@@ -389,10 +379,8 @@ Table~\ref{tab:phase1_baseline} and Figure~\ref{fig:baseline} confirm that all t
 
 However, as highlighted by our SHAP attribution analysis (Section~\ref{sec:shap}, Figure~\ref{fig:shap}), this strong clean performance is heavily contingent upon the \texttt{Number} flow feature. In conventional evaluations, this single-feature reliance remains undetected because clean test traffic consistently mirrors training distributions. Macro-averaged metrics across all 31 individual attack classes further confirm that baseline discrimination is uniformly distributed across volumetric, reconnaissance, brute-force, and web injection categories rather than skewed toward high-volume classes. In addition, zero classification timeouts or memory faults were observed across all 140,393 test flows, verifying line-rate inferencing feasibility. In Section~\ref{sec:phase2}, we test whether this performance persists under deliberate feature perturbations.
 
-% ─────────────────────────────────────────────────────────────
 \section{Adversarial Evasion and Vulnerability Dynamics}
 \label{sec:phase2}
-% ─────────────────────────────────────────────────────────────
 
 With nominal baselines confirmed, we now test how well these decision boundaries hold up when an attacker deliberately perturbs feature values. We evaluate 500 verified malicious flow samples under our feature-constrained genetic algorithm with a default budget of $\varepsilon = 5.0$. The attack mutates only continuous statistics while leaving transport flags invariant.
 
@@ -589,10 +577,8 @@ To confirm that GA evasion reflects guided search instead of random noise artifa
 
 The empirical comparison confirms the advantage of evolutionary optimization: at $\varepsilon = 5.0$, random noise achieves a negligible 2.00\% ASR, whereas the GA achieves 56.00\% ASR (a 54.00 percentage-point evolutionary advantage). Random perturbations fail because they scatter uniformly throughout the 15-dimensional subspace, whereas the GA discovers the co-dependent feature trajectories needed to navigate complex tree decision boundaries.
 
-% ─────────────────────────────────────────────────────────────
 \section{Cross-Architecture Robustness Evaluation: Tree Ensembles vs. Deep Neural Networks}
 \label{sec:phase3}
-% ─────────────────────────────────────────────────────────────
 
 A fundamental question in adversarial ML is whether decision boundary geometry dictates structural robustness. To investigate this, we implement a deep Multi-Layer Perceptron (MLP) and benchmark it against XGBoost under identical feature-constrained GA attacks.
 
@@ -681,10 +667,8 @@ This divergence is further clarified by examining epsilon sensitivity (Figure~\r
 
 Figure~\ref{fig:crossepsilon} and Figure~\ref{fig:confdeg} together confirm that the MLP lacks the piecewise-constant protective structure of tree models. Its continuous activation functions provide the GA with consistent gradient-aligned feedback, enabling steady confidence suppression. Under the confidence degradation curve (Figure~\ref{fig:confdeg}), mean MLP prediction confidence falls below the nominal 0.50 classification decision threshold at $\varepsilon \approx 2.50$. XGBoost, by contrast, retains high decision confidence until perturbations reach the primary root split boundary at $\varepsilon \approx 4.69$.
 
-% ─────────────────────────────────────────────────────────────
 \section{Adversarial Defense via Gaussian Subspace Smoothing}
 \label{sec:phase4}
-% ─────────────────────────────────────────────────────────────
 
 In this section, we evaluate the defensive efficacy of our adversarial training framework augmented with Gaussian Subspace Smoothing (GSS) (Section~\ref{sec:gss}).
 
@@ -803,10 +787,8 @@ Figure~\ref{fig:transfer} presents the complete cross-architecture defense trans
   \label{fig:transfer}
 \end{figure}
 
-% ─────────────────────────────────────────────────────────────
 \section{Decision Boundary Geometry and Feature Attribution Drift}
 \label{sec:phase5}
-% ─────────────────────────────────────────────────────────────
 
 This section provides three complementary analyses to characterize the structural mechanisms underlying Gaussian Subspace Smoothing: t-SNE cluster visualization of adversarial migration trajectories, Pareto frontier modeling of robustness-utility trade-offs, and feature importance drift quantification across baseline and defended model configurations.
 
@@ -873,10 +855,8 @@ Other Features & 1.53\% & 3.28\% & $+1.75$ pp \\
 
 The attribution data reveals why GSS works. In the baseline model, XGBoost relied almost entirely on \texttt{Number} (92.25\% importance). Retraining with GSS forces the boosting algorithm to place splits across a broader feature set: \texttt{Number} falls from 92.25\% to 68.14\% importance. The released weight moves across secondary features: backward packet volume (+6.27 pp), flow inter-arrival mean (+5.43 pp), duration (+4.03 pp), and forward packet length max (+3.37 pp). Spreading decision weight across multiple features prevents the attacker from evading detection through rate throttling alone.
 
-% ─────────────────────────────────────────────────────────────
 \section{Discussion}
 \label{sec:discussion}
-% ─────────────────────────────────────────────────────────────
 
 \subsection{Operational Security Implications for SOC Deployments}
 Our empirical findings carry direct, actionable guidance for enterprise and IoT security operations:
@@ -922,10 +902,8 @@ All stochastic procedures, including stratified holdout partitioning, genetic al
     \item \texttt{train\_gss\_defense.py}: Retrains models with Gaussian Subspace Smoothing and generates Table~\ref{tab:phase4_defense} and Figure~\ref{fig:defensecore}.
 \end{itemize}
 
-% ─────────────────────────────────────────────────────────────
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
-% ─────────────────────────────────────────────────────────────
 
 Tree ensembles remain the practical standard for network flow inspection, yet high clean accuracy can mask vulnerabilities to feature-constrained evasion. In this study, we evaluated Random Forest, XGBoost, LightGBM, and a deep MLP across 31 attack classes from the CIC-IoT2023 benchmark under semantically constrained evolutionary attacks.
 
@@ -940,7 +918,6 @@ Our results lead to five principal observations:
 
 Four directions merit further investigation: (i) validating packet-level perturbation generation in live hardware testbeds through DPDK-based flow injection; (ii) extending Gaussian Subspace Smoothing to online adaptive retraining pipelines capable of tracking non-stationary attack distributions; (iii) characterizing robustness trade-offs in federated IoT deployments where individual nodes hold private local traffic corpora; and (iv) deriving certified $\ell_2$ robustness bounds for tree ensembles through inference-time subspace smoothing analogous to randomized smoothing for neural classifiers.
 
-% ─────────────────────────────────────────────────────────────
 
 \bmhead{Acknowledgements}
 The authors express their gratitude to the Department of Computer Science and Engineering, School of Engineering and Technology, MGM University, for providing high-performance computational infrastructure. We also thank the Canadian Institute for Cybersecurity (CIC) at the University of New Brunswick for providing the CIC-IoT2023 dataset.
@@ -956,7 +933,6 @@ The authors express their gratitude to the Department of Computer Science and En
 \item \textbf{Materials availability:} Not applicable.
 \item \textbf{Code availability:} The complete data curation pipeline, genetic algorithm implementation, trained model weights, deterministic evaluation seeds, and visualization scripts are publicly available at \url{https://github.com/DHANANJAY-2006/adversarial-iot-ids-robustness}.
 \item \textbf{Author contribution:} \textbf{Dhananjay Kadge} conceptualized the study, developed the attack and defense algorithms, conducted all empirical experiments, performed the formal data analysis, and wrote the original manuscript draft. \textbf{Monali Maid} provided overall project supervision, contributed to methodological design, reviewed the statistical evaluation and theoretical modeling, and edited the manuscript. Both authors reviewed and approved the final manuscript.
-\item \textbf{Use of generative AI in scientific writing:} During manuscript preparation, the authors utilized generative AI solely for grammatical refinement, language polishing, and formatting assistance. All research hypotheses, algorithmic designs, software implementations, empirical experiments, and analytical conclusions were conceived and executed independently by the authors, who critically evaluated and take full responsibility for the published content.
 \end{itemize}
 
 \bibliography{references}
